@@ -1,42 +1,46 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
+import { callbackify } from 'util';
 
 function PersonList() {
     const data = {
-        data: {
-            name
-        }
+        id: 88,
+        name: ''
     }
 
-    const [persons, setPersons] = useState([data]);
+    const [transaction, setTransaction] = useState('');
+    let objects: any[] = [];
+    // const [setObjects] = useState(objects);
+
     //usually used as didMount && didUpdate
     useEffect(() => {
 
-        axios.get(`http://localhost:3030/data`)
+        axios.get(`http://localhost:3030/objects`)
             .then(res => {
-                setPersons(res.data)
+                objects.push(res.data);
+                console.log(objects);
             })
-    }, [setPersons]
+    }, [objects]
     );
 
-    const [transaction, setTransaction] = useState('');
-    useEffect(() => {
-        axios.post(`http://localhost:3030/data`, { data })
-            .then(res => {
-                console.log(res);
-                console.log(res.data);
-            })
-    }, [transaction]
-    );
     return (
         <div>
-            <input className="input__transaction" value={transaction} onChange={() => {
-                setTransaction(transaction);
-            }} />
 
             <ul>
-                <li>{persons.map(person => person.data.name)}</li>
+                <li>{objects.map(data => data.data.name)}</li>
             </ul>
+
+            <input type="text" value={transaction}
+                onChange={(event) => {
+                    setTransaction(event.target.value);
+                }} />
+            <button type="submit" onClick={() => {
+                data.name = transaction
+                axios.post(`http://localhost:3030/objects`, data)
+                    .then(res => {
+                        console.log(objects);
+                    })
+            }}>ENIAR</button>
         </div>
     )
 };
