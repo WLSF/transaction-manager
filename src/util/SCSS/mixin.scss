@@ -1,0 +1,70 @@
+@mixin retina {
+    @media only screen and (-webkit-min-device-pixel-ratio: 2), only screen and (min--moz-device-pixel-ratio: 2), only screen and (-o-min-device-pixel-ratio: 2/1), only screen and (min-device-pixel-ratio: 2), only screen and (min-resolution: 192dpi), only screen and (min-resolution: 2dppx) {
+        @content;
+    }
+}
+
+@mixin iphone4 {
+    @media only screen and (min-device-width: 320px), only screen and (max-device-width: 480px), only screen and (-webkit-min-device-pixel-ratio: 2) {
+        @content;
+    }
+}
+
+@mixin iphoneX {
+    @media only screen and (min-device-width: 375px) and (max-device-width: 812px) and (-webkit-min-device-pixel-ratio: 3) {
+        @content;
+    }
+}
+
+@mixin desktop4x3 {
+    @media only screen and (min-width: 1024px) and (max-width: 1280px) {
+        @content;
+    }
+}
+
+@mixin tablet {
+    @media only screen and (min-width: 768px) and (max-width: 991px) {
+        @content;
+    }
+}
+
+@mixin tabletPro {
+    @media (width: 1024px) and (width: 1366px) {
+        @content;
+    }
+}
+
+@mixin desktop16x9 {
+    @media (min-width: 1280px - 1px) {
+        @content;
+    }
+}
+
+@mixin letter-spacing($spacing) {
+    letter-spacing: ($spacing / 1000) * 1em;
+}
+
+@mixin media-break-down-xs {
+    @media (max-width: 575.98px) {
+        @content;
+    }
+}
+
+@mixin media-break-down-sm {
+    @media (max-width: 767.98px) {
+        @content;
+    }
+}
+
+@mixin media-break-down-md {
+    @media (max-width: 991.98px) {
+        @content;
+    }
+}
+
+@mixin media-break-down-lg {
+    @media (max-width: 1199.98px) {
+        @content;
+}
+
+}

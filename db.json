@@ -1,19 +1,25 @@
 {
-    "posts": [
+    "transactions": [
         {
-            "id": 1,
-            "title": "json-server",
-            "author": "typicode"
-        }
-    ],
-    "comments": [
+            "id": 3,
+            "description": "Amazon",
+            "value": 323,
+            "tax": 12,
+            "type": "credit"
+        },
         {
-            "id": 1,
-            "body": "some comment",
-            "postId": 1
+            "id": 4,
+            "description": "Americanas",
+            "value": 12,
+            "tax": 0.2,
+            "type": "credit"
+        },
+        {
+            "id": 5,
+            "description": "Wallmart",
+            "value": 1,
+            "tax": 0,
+            "type": "debit"
         }
-    ],
-    "profile": {
-        "name": "typicode"
-    }
+    ]
 }

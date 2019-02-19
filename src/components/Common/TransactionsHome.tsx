@@ -24,9 +24,27 @@ function PersonList() {
     );
 
     return (
+        <div>
 
-        <TableComponent />
+            <TableComponent />
 
+            <ul>
+                <li>{objects.map(data => data.data.name)}</li>
+            </ul>
+
+            <input type="text" value={transaction}
+                onChange={(event) => {
+                    setTransaction(event.target.value);
+                }} />
+            <button type="submit" onClick={() => {
+                data.name = transaction
+                axios.post(`http://localhost:3131/posts`, data)
+                    .then(res => {
+                        console.log(objects);
+                    })
+            }}>ENIAR</button>
+            <Wallet />
+        </div>
     )
 };
 

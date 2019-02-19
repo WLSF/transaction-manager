@@ -1,0 +1,24 @@
+.balance {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
+    & .total-balance {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 32px;
+        color: #444750;
+        &::before {
+            content: 'U$';
+        }
+    }
+    & .tax-balance {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 32px;
+        color: red;
+        &::before {
+            content: '- $';
+        }
+    }
+}

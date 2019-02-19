@@ -1,0 +1,10 @@
+@import '../../util/SCSS/mixin.scss';
+.separator {
+    margin: 50px 0;
+}
+
+@include media-break-down-sm {
+    .separator {
+        margin: 30px 0;
+    }
+}

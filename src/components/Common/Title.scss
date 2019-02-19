@@ -1,0 +1,43 @@
+@import '../../util/SCSS/mixin.scss';
+h1.pbr-standard-title {
+    font-size: 44px;
+    line-height: 56px;
+    overflow-wrap: break-word;
+}
+
+h2.pbr-standard-title {
+    font-size: 36px;
+    line-height: 48px;
+    overflow-wrap: break-word;
+}
+
+h3.pbr-standard-title {
+    font-size: 28px;
+    line-height: 38px;
+    overflow-wrap: break-word;
+}
+
+h4.pbr-standard-title {
+    font-size: 24px;
+    line-height: 32px;
+    overflow-wrap: break-word;
+}
+
+@include media-break-down-sm {
+    h1.pbr-standard-title {
+        font-size: 28px;
+        line-height: normal;
+    }
+    h2.pbr-standard-title {
+        font-size: 24px;
+        line-height: normal;
+    }
+    h3.pbr-standard-title {
+        font-size: 20px;
+        line-height: normal;
+    }
+    h4.pbr-standard-title {
+        font-size: 18px;
+        line-height: normal;
+    }
+}

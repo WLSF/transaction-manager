@@ -14,7 +14,6 @@ import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
 
-
 const styles = {
     root: {
         flexGrow: 1,
@@ -28,11 +27,6 @@ const styles = {
     },
 };
 
-
-
-
-
-
 function HeaderComponent(props) {
     const { classes } = props;
     const [open, setOpen] = useState(false);
@@ -42,7 +36,6 @@ function HeaderComponent(props) {
     const [object, setObject] = useState({
         description, value, type
     })
-
 
     return (
         <div className={classes.root}>
@@ -118,7 +111,6 @@ function HeaderComponent(props) {
                                 .then(res => {
                                     console.log(object);
                                 })
-
 
                         }} color="primary">
                             Subscribe
