@@ -1,7 +1,6 @@
 import React, { useState, useEffect } from 'react';
 import axios from 'axios';
-import { callbackify } from 'util';
-
+import TableComponent from '../Common/TableComponent'
 function PersonList() {
     const data = {
         id: 88,
@@ -25,6 +24,8 @@ function PersonList() {
 
     return (
         <div>
+
+            <TableComponent />
 
             <ul>
                 <li>{objects.map(data => data.data.name)}</li>
