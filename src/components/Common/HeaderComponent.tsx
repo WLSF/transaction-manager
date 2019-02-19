@@ -1,19 +1,12 @@
-import React, { useState } from 'react';
-import PropTypes from 'prop-types';
+import React from 'react';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
 import Typography from '@material-ui/core/Typography';
-import Button from '@material-ui/core/Button';
 import IconButton from '@material-ui/core/IconButton';
-import Dialog from '@material-ui/core/Dialog';
-import DialogActions from '@material-ui/core/DialogActions';
-import DialogContent from '@material-ui/core/DialogContent';
-import DialogContentText from '@material-ui/core/DialogContentText';
-import DialogTitle from '@material-ui/core/DialogTitle';
-import TextField from '@material-ui/core/TextField';
-import axios from 'axios';
-
+import './HeaderComponent.scss';
+import TableComponent from './TableComponent';
+import Icon from '@material-ui/core/Icon';
 
 const styles = {
     root: {
@@ -28,110 +21,26 @@ const styles = {
     },
 };
 
-
-
-
-
-
 function HeaderComponent(props) {
     const { classes } = props;
-    const [open, setOpen] = useState(false);
-    const [type, setType] = useState('');
-    const [value, setValue] = useState('');
-    const [description, setDescription] = useState('');
-    const [object, setObject] = useState({
-        description, value, type
-    })
-
 
     return (
-        <div className={classes.root}>
+        <div className="header-component">
             <AppBar position="static">
                 <Toolbar>
                     <IconButton className={classes.menuButton} color="inherit" aria-label="Menu">
-                        HI
+                        <Icon>credit_card</Icon>
                     </IconButton>
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         TRANSACTION MANAGER
-          </Typography>
-                    <Button color="inherit" onClick={() => setOpen(true)}>Login</Button>
+                    </Typography>
+
                 </Toolbar>
             </AppBar>
 
-            {open &&
-                <Dialog
-                    open={open}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Insert Transaction
-      </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Description"
-                            type="text"
-                            value={description}
-                            onChange={(event) => {
-                                setDescription(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Value"
-                            type="number"
-                            value={value}
-                            onChange={(event) => {
-                                setValue(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Type"
-                            type="text"
-                            value={type}
-                            onChange={(event) => {
-                                setType(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setOpen(!open)} color="primary">
-                            Cancel
-      </Button>
-                        <Button onClick={() => {
-                            object.description = description;
-                            object.type = type;
-                            object.value = value;
-                            console.log(object);
-                            axios.post(`http://localhost:3030/`, { object })
-                                .then(res => {
-                                    console.log(object);
-                                })
-
-
-                        }} color="primary">
-                            Subscribe
-      </Button>
-                    </DialogActions>
-                </Dialog>}
-
+            <TableComponent />
         </div>
     );
 }
-
-HeaderComponent.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(HeaderComponent);

@@ -1,0 +1,31 @@
+.pbr-standard-input {
+    & .subtext {
+        color: #777777;
+        font-size: 19px;
+    }
+    & .ant-input {
+        margin-bottom: 0;
+        border-radius: 0;
+        background-color: transparent;
+        color: rgb(82, 82, 83);
+        font-size: 19px;
+        outline: none;
+        font-weight: normal;
+        border: hidden;
+        border-bottom: 2px solid #9393A4;
+        width: 100%;
+    }
+    & .ant-input::placeholder {
+        color: #B4B5B4;
+    }
+    & .ant-input:focus {
+        box-shadow: transparent;
+        -webkit-box-shadow: 0 0 0 0px rgba(245, 34, 45, 0.2);
+    }
+    & .has-error {
+        .ant-input:focus {
+            box-shadow: transparent;
+            -webkit-box-shadow: 0 0 0 0px rgba(245, 34, 45, 0.2);
+        }
+    }
+}

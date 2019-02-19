@@ -1,0 +1,153 @@
+.balance {
+    display: flex;
+    flex-direction: column;
+    justify-content: flex-start;
+    text-align: start;
+    & .total-balance {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 32px;
+        color: #444750;
+    }
+    & .tax-balance {
+        display: inline-block;
+        font-weight: 600;
+        font-size: 32px;
+        color: red;
+        &::before {
+            content: '- ';
+        }
+    }
+}
+
+.balance-details {
+    box-shadow: 0 6px 20px;
+    margin-top: 15px;
+}
+
+.button-include {
+    padding-bottom: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.expand {
+    transform: 'rotate(0deg)';
+    margin-left: 'auto';
+    transition: 'transform';
+    transition-duration: 4s;
+}
+
+.expandOpen {
+    transform: 'rotate(180deg)',
+}
+
+// askjjdjaushd
+MuiIcon-root-53 {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.box {
+    color: red;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    margin: 3px;
+    &:hover {
+        color: green;
+    }
+    &::before,
+    &::after {
+        z-index: 3;
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        -webkit-transform: scale(0);
+        transition: 0.5s;
+    }
+}
+
+.foo {
+    &::before {
+        border-bottom: 3px solid #FFF;
+        border-left: 3px solid #FFF;
+        -webkit-transform-origin: 0 100%;
+    }
+    &::after {
+        border-top: 3px solid #FFF;
+        border-right: 3px solid #FFF;
+        -webkit-transform-origin: 100% 0%;
+    }
+}
+
+/* START THE SECOND ARTICLE */
+
+#paid:hover {
+    -webkit-transform: rotateZ(-30deg);
+    -ms-transform: rotateZ(-30deg);
+    transform: rotateZ(-30deg);
+}
+
+.trigger {
+    background-color: red;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    text-indent: 100%;
+    color: transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+}
+
+.trigger span,
+.trigger span::before,
+.trigger span::after {
+    position: absolute;
+    width: 31px;
+    height: 4px;
+    border-radius: 4px;
+    background: white;
+}
+
+.trigger span {
+    top: calc(50% - 2px);
+    left: calc(50% - 16px);
+    transition: all .3s ease;
+}
+
+.trigger span::before,
+.trigger span::after {
+    content: '';
+    left: 0;
+    transition: all .3s ease;
+}
+
+.trigger span::before {
+    bottom: 8px;
+}
+
+.trigger span::after {
+    top: 8px;
+}
+
+.trigger:hover span {
+    transform: rotate(180deg);
+}
+
+.trigger:hover span::before {
+    transform: translateX(-2px) translateY(2px) rotate(-45deg);
+    width: 60%;
+}
+
+.trigger:hover span::after {
+    transform: translateX(-2px) translateY(-2px) rotate(45deg);
+    width: 60%;
+}
