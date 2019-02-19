@@ -1,25 +1,46 @@
 {
-    "transactions": [
-        {
-            "id": 3,
-            "description": "Amazon",
-            "value": 323,
-            "tax": 12,
-            "type": "credit"
-        },
-        {
-            "id": 4,
-            "description": "Americanas",
-            "value": 12,
-            "tax": 0.2,
-            "type": "credit"
-        },
-        {
-            "id": 5,
-            "description": "Wallmart",
-            "value": 1,
-            "tax": 0,
-            "type": "debit"
-        }
-    ]
+  "transactions": [
+    {
+      "id": 3,
+      "description": "Amazon",
+      "value": 323,
+      "tax": 12,
+      "type": "credit"
+    },
+    {
+      "id": 4,
+      "description": "Americanas",
+      "value": 12,
+      "tax": 0.2,
+      "type": "credit"
+    },
+    {
+      "id": 5,
+      "description": "Wallmart",
+      "value": 1,
+      "tax": 0,
+      "type": "debit"
+    },
+    {
+      "description": "TRANSED",
+      "value": "20000",
+      "type": "CREDITO",
+      "tax": "",
+      "id": 9
+    },
+    {
+      "description": "transferencia bancária",
+      "value": "5888",
+      "type": "DEBITO",
+      "tax": "",
+      "id": 10
+    },
+    {
+      "description": "Nova compra",
+      "value": "855",
+      "type": "CREDITO",
+      "tax": "0.5",
+      "id": 11
+    }
+  ]
 }

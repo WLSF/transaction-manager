@@ -34,7 +34,7 @@ function TableComponent(props) {
             .then(res => {
                 setRows(res.data);
             });
-    }, [balance]
+    }, [rows]
     );
     return (
         <>
@@ -54,7 +54,12 @@ function TableComponent(props) {
                                 <TableCell component="th" scope="row">
                                     {row.description}
                                 </TableCell>
-                                <TableCell align="right">{row.value}</TableCell>
+                                <TableCell align="right">
+                                    {new Intl.NumberFormat('pt-BR', {
+                                        style: 'currency',
+                                        currency: 'BRL'
+                                    }).format(row.value)}
+                                </TableCell>
                                 <TableCell align="right">{row.tax}</TableCell>
                                 <TableCell align="right">{row.type}</TableCell>
                             </TableRow>
@@ -63,17 +68,22 @@ function TableComponent(props) {
                 </Table>
             </Paper>
             <div className="balance" style={{ maxWidth: "350px", border: "1px solid red" }}> Total:
-                <span className="total-balance">{balance}</span>
-                <span className="tax-balance">{tax}</span>
+                <span className="total-balance">
+
+                    {new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(balance)}</span>
+                <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(tax)}</span>
                 <BalanceSeparator />
-                <span className="total-balance"> {balance - tax}</span>
-                {/* <InputComponentType name="balance-check"
-                    type="password"
-                    placeholder="Check security code"
-                    formWrapper={props.form}
-                    rules={[
-                        { required: true, message: "Please, check security code" },
-                    ]} /> */}
+                <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format((balance - tax))}</span>
+
             </div>
         </>
 

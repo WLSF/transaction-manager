@@ -31,10 +31,11 @@ function HeaderComponent(props) {
     const { classes } = props;
     const [open, setOpen] = useState(false);
     const [type, setType] = useState('');
+    const [tax, setTax] = useState('');
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
     const [object, setObject] = useState({
-        description, value, type
+        description, value, type, tax
     })
 
     return (
@@ -97,17 +98,32 @@ function HeaderComponent(props) {
                             }}
                             fullWidth
                         />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="tax"
+                            label="Transaction Tax"
+                            type="text"
+                            value={tax}
+                            onChange={(event) => {
+                                setTax(event.target.value);
+                            }}
+                            fullWidth
+                        />
                     </DialogContent>
                     <DialogActions>
                         <Button onClick={() => setOpen(!open)} color="primary">
                             Cancel
       </Button>
+
+                        //ON SUBMIT CLEAR FORM
                         <Button onClick={() => {
                             object.description = description;
                             object.type = type;
+                            object.tax = tax;
                             object.value = value;
                             console.log(object);
-                            axios.post(`http://localhost:3030/`, { object })
+                            axios.post(`http://localhost:3131/transactions`, object)
                                 .then(res => {
                                     console.log(object);
                                 })
