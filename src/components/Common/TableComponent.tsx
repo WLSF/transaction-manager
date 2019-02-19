@@ -95,15 +95,10 @@ function TableComponent(props) {
                                     }
                                 </TableCell>
                                 <TableCell>
-                                    <Icon className="box is-paid-icon" id="paid"
-                                    onMouseEnter={() => {
-                                         setPaidIcon('done_all') 
-                                    }}
-                                    onMouseLeave={() => {
-                                         setPaidIcon('aspect_ratio');
-                                    }}
-                                    >
-                                    {paidIcon}</Icon>
+                                    <button className="trigger"><span>
+                                    </span>
+                                    </button>
+
                                 </TableCell>
                             </TableRow>
                         ))}

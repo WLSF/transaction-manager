@@ -91,3 +91,63 @@ MuiIcon-root-53 {
     -ms-transform: rotateZ(-30deg);
     transform: rotateZ(-30deg);
 }
+
+.trigger {
+    background-color: red;
+    width: 35px;
+    height: 35px;
+    border: none;
+    border-radius: 50%;
+    overflow: hidden;
+    text-indent: 100%;
+    color: transparent;
+    white-space: nowrap;
+    cursor: pointer;
+    outline: none;
+    position: relative;
+}
+
+.trigger span,
+.trigger span::before,
+.trigger span::after {
+    position: absolute;
+    width: 31px;
+    height: 4px;
+    border-radius: 4px;
+    background: white;
+}
+
+.trigger span {
+    top: calc(50% - 2px);
+    left: calc(50% - 16px);
+    transition: all .3s ease;
+}
+
+.trigger span::before,
+.trigger span::after {
+    content: '';
+    left: 0;
+    transition: all .3s ease;
+}
+
+.trigger span::before {
+    bottom: 8px;
+}
+
+.trigger span::after {
+    top: 8px;
+}
+
+.trigger:hover span {
+    transform: rotate(180deg);
+}
+
+.trigger:hover span::before {
+    transform: translateX(-2px) translateY(2px) rotate(-45deg);
+    width: 60%;
+}
+
+.trigger:hover span::after {
+    transform: translateX(-2px) translateY(-2px) rotate(45deg);
+    width: 60%;
+}
