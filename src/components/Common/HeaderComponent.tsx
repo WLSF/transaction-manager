@@ -12,6 +12,8 @@ import DialogContent from '@material-ui/core/DialogContent';
 import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
+import axios from 'axios';
+
 
 const styles = {
     root: {
@@ -36,6 +38,12 @@ function HeaderComponent(props) {
     const [open, setOpen] = useState(false);
     const [type, setType] = useState('');
     const [value, setValue] = useState('');
+    const [description, setDescription] = useState('');
+    const [object, setObject] = useState({
+        description, value, type
+    })
+
+
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -60,6 +68,18 @@ function HeaderComponent(props) {
                         <DialogContentText>
                             Insert Transaction
       </DialogContentText>
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Transaction Description"
+                            type="text"
+                            value={description}
+                            onChange={(event) => {
+                                setDescription(event.target.value);
+                            }}
+                            fullWidth
+                        />
                         <TextField
                             autoFocus
                             margin="dense"
@@ -90,8 +110,15 @@ function HeaderComponent(props) {
                             Cancel
       </Button>
                         <Button onClick={() => {
-                            setValue(value);
-                            setType(type);
+                            object.description = description;
+                            object.type = type;
+                            object.value = value;
+                            console.log(object);
+                            axios.post(`http://localhost:3030/`, { object })
+                                .then(res => {
+                                    console.log(object);
+                                })
+
 
                         }} color="primary">
                             Subscribe

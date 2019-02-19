@@ -14,10 +14,10 @@ function PersonList() {
     //usually used as didMount && didUpdate
     useEffect(() => {
 
-        axios.get(`http://localhost:3030/objects`)
+        axios.get(`http://localhost:3030/`)
             .then(res => {
                 objects.push(res.data);
-                console.log(objects);
+                // console.log(objects);
             })
     }, [objects]
     );
