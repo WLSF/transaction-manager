@@ -8,25 +8,30 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
 import { BalanceSeparator } from './BalanceSeparator';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogContentText, NativeSelect, FormControl, DialogActions, Button } from '@material-ui/core';
-
+import { Dialog, DialogTitle, DialogContent, TextField, DialogContentText, NativeSelect, FormControl, DialogActions, Button, CardContent, CardActions, Card, IconButton, Typography, Collapse, withStyles, TablePagination, TableFooter, Divider } from '@material-ui/core';
+import Icon from '@material-ui/core/Icon';
 export interface IObject {
     description: string, value: number, type: number, tax: number
 }
 
 function TableComponent(props) {
 
+    const [expanded, setExpand] = useState(false);
     const [type, setType] = useState('');
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
-    const [tax, setTaxes] = useState(0);
+    const [taxes, setTaxes] = useState(0);
+    const [tax, setTax] = useState(0);
 
-    const [object, setObject] = useState({
+    const [object] = useState({
         description, value, type, tax
     })
-    const [open, setOpen] = useState(false);
 
+    const [open, setOpen] = useState(false);
     const [rows, setRows] = useState<IObject[]>([]);
+
+    const [page, setPage] = useState(0);
+    const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [balance, setBalance] = useState(0);
     useEffect(() => {
@@ -52,6 +57,9 @@ function TableComponent(props) {
     }, [balance]
     );
 
+    const [isActive, setIsActive] = useState(false);
+    const [paidIcon, setPaidIcon] = useState('aspect_ratio');
+
     return (
         <>
             <Paper >
@@ -62,6 +70,7 @@ function TableComponent(props) {
                             <TableCell align="right">Value</TableCell>
                             <TableCell align="right">Tax</TableCell>
                             <TableCell align="right">Type</TableCell>
+                            <TableCell align="right">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -85,29 +94,92 @@ function TableComponent(props) {
                                         ("Débito") || ("Crédito")
                                     }
                                 </TableCell>
+                                <TableCell>
+                                    <Icon className="box is-paid-icon" id="paid"
+                                    onMouseEnter={() => {
+                                         setPaidIcon('done_all') 
+                                    }}
+                                    onMouseLeave={() => {
+                                         setPaidIcon('aspect_ratio');
+                                    }}
+                                    >
+                                    {paidIcon}</Icon>
+                                </TableCell>
                             </TableRow>
                         ))}
+
                     </TableBody>
+                    <TableFooter>
+                        <TableRow>
+                            <TablePagination
+                                rowsPerPageOptions={[5, 10, 25]}
+                                component="span"
+                                count={rows.length}
+                                rowsPerPage={rowsPerPage}
+                                page={page}
+                                backIconButtonProps={{
+                                    'aria-label': 'Previous Page',
+                                }}
+                                nextIconButtonProps={{
+                                    'aria-label': 'Next Page',
+                                }}
+                                onChangePage={(event, page) => {
+                                    setPage(page);
+                                    console.log(page);
+                                    console.log(event);
+                                }}
+                                onChangeRowsPerPage={(event) => {
+                                    console.log(event.target.value);
+                                    setRowsPerPage(Number(event.target.value));
+
+                                }}
+                            />
+                        </TableRow>
+                    </TableFooter>
                 </Table>
             </Paper>
-            <div className="balance" style={{ maxWidth: "350px", border: "1px solid red" }}> Total:
-                <span className="total-balance">
 
-                    {new Intl.NumberFormat('pt-BR', {
-                        style: 'currency',
-                        currency: 'BRL'
-                    }).format(balance)}</span>
-                <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL'
-                }).format(tax)}</span>
-                <BalanceSeparator />
-                <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
-                    style: 'currency',
-                    currency: 'BRL'
-                }).format((balance - tax))}</span>
+            <Card className="balance-details" >
+                <CardContent>
+                    <div className="balance" style={{ maxWidth: "350px" }}> Total:
+                  <span className="total-balance">
 
-            </div>
+                            {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            }).format(balance)}</span>
+
+                    </div>
+                </CardContent>
+                <CardActions>
+                    <Button color="inherit" className="button-include" onClick={() => setOpen(true)}>Include</Button>
+                    <Button
+                        className={(expanded === true) ? "expandOpen" : "expand"}
+                        onClick={() => setExpand(!expanded)}
+                        aria-expanded={expanded}
+                        aria-label="Show more"
+                    >
+                        Expand
+                    </Button>
+                </CardActions>
+
+                <Collapse in={expanded} timeout="auto" unmountOnExit>
+                    <CardContent>
+                        <div className="balance" style={{ maxWidth: "350px" }}>
+                            <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            }).format(taxes)}</span>
+                            <BalanceSeparator />
+                            <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
+                                style: 'currency',
+                                currency: 'BRL'
+                            }).format((balance - taxes))}</span>
+                        </div>
+                    </CardContent>
+                </Collapse>
+            </Card>
+
             <Dialog
                 open={open}
                 aria-labelledby="form-dialog-title"
@@ -150,7 +222,7 @@ function TableComponent(props) {
                         type="number"
                         value={tax}
                         onChange={(event: any) => {
-                            setTaxes(event.target.value);
+                            setTax(event.target.value);
                         }}
                         fullWidth
                     />
@@ -189,7 +261,7 @@ function TableComponent(props) {
       </Button>
                 </DialogActions>
             </Dialog>
-            <Button color="inherit" onClick={() => setOpen(true)}>Login</Button>
+
         </>
 
     );

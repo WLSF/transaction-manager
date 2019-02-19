@@ -19,3 +19,75 @@
         }
     }
 }
+
+.balance-details {
+    box-shadow: 0 6px 20px;
+    margin-top: 15px;
+}
+
+.button-include {
+    padding-bottom: 100px;
+    display: flex;
+    justify-content: flex-end;
+}
+
+.expand {
+    transform: 'rotate(0deg)';
+    margin-left: 'auto';
+    transition: 'transform';
+    transition-duration: 4s;
+}
+
+.expandOpen {
+    transform: 'rotate(180deg)',
+}
+
+// askjjdjaushd
+MuiIcon-root-53 {
+    width: 0;
+    height: 0;
+    overflow: hidden;
+    font-size: 0;
+    user-select: none;
+    flex-shrink: 0;
+}
+
+.box {
+    color: red;
+    transition: 0.5s;
+    -webkit-transition: 0.5s;
+    margin: 3px;
+    &:hover {
+        color: green;
+    }
+    &::before,
+    &::after {
+        z-index: 3;
+        content: '';
+        position: absolute;
+        box-sizing: border-box;
+        -webkit-transform: scale(0);
+        transition: 0.5s;
+    }
+}
+
+.foo {
+    &::before {
+        border-bottom: 3px solid #FFF;
+        border-left: 3px solid #FFF;
+        -webkit-transform-origin: 0 100%;
+    }
+    &::after {
+        border-top: 3px solid #FFF;
+        border-right: 3px solid #FFF;
+        -webkit-transform-origin: 100% 0%;
+    }
+}
+
+/* START THE SECOND ARTICLE */
+
+#paid:hover {
+    -webkit-transform: rotateZ(-30deg);
+    -ms-transform: rotateZ(-30deg);
+    transform: rotateZ(-30deg);
+}
