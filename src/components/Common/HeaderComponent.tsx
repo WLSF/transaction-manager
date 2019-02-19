@@ -1,5 +1,4 @@
 import React, { useState } from 'react';
-import PropTypes from 'prop-types';
 import { withStyles } from '@material-ui/core/styles';
 import AppBar from '@material-ui/core/AppBar';
 import Toolbar from '@material-ui/core/Toolbar';
@@ -13,6 +12,7 @@ import DialogContentText from '@material-ui/core/DialogContentText';
 import DialogTitle from '@material-ui/core/DialogTitle';
 import TextField from '@material-ui/core/TextField';
 import axios from 'axios';
+import { FormControl, NativeSelect } from '@material-ui/core';
 
 const styles = {
     root: {
@@ -29,15 +29,7 @@ const styles = {
 
 function HeaderComponent(props) {
     const { classes } = props;
-    const [open, setOpen] = useState(false);
-    const [type, setType] = useState('');
-    const [tax, setTax] = useState('');
-    const [value, setValue] = useState('');
-    const [description, setDescription] = useState('');
-    const [object, setObject] = useState({
-        description, value, type, tax
-    })
-
+  
     return (
         <div className={classes.root}>
             <AppBar position="static">
@@ -48,98 +40,12 @@ function HeaderComponent(props) {
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         TRANSACTION MANAGER
           </Typography>
-                    <Button color="inherit" onClick={() => setOpen(true)}>Login</Button>
+
                 </Toolbar>
             </AppBar>
-
-            {open &&
-                <Dialog
-                    open={open}
-                    aria-labelledby="form-dialog-title"
-                >
-                    <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
-                    <DialogContent>
-                        <DialogContentText>
-                            Insert Transaction
-      </DialogContentText>
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Description"
-                            type="text"
-                            value={description}
-                            onChange={(event) => {
-                                setDescription(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Value"
-                            type="number"
-                            value={value}
-                            onChange={(event) => {
-                                setValue(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Type"
-                            type="text"
-                            value={type}
-                            onChange={(event) => {
-                                setType(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="tax"
-                            label="Transaction Tax"
-                            type="text"
-                            value={tax}
-                            onChange={(event) => {
-                                setTax(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                    </DialogContent>
-                    <DialogActions>
-                        <Button onClick={() => setOpen(!open)} color="primary">
-                            Cancel
-      </Button>
-
-                        //ON SUBMIT CLEAR FORM
-                        <Button onClick={() => {
-                            object.description = description;
-                            object.type = type;
-                            object.tax = tax;
-                            object.value = value;
-                            console.log(object);
-                            axios.post(`http://localhost:3131/transactions`, object)
-                                .then(res => {
-                                    console.log(object);
-                                })
-
-                        }} color="primary">
-                            Subscribe
-      </Button>
-                    </DialogActions>
-                </Dialog>}
 
         </div>
     );
 }
-
-HeaderComponent.propTypes = {
-    classes: PropTypes.object.isRequired,
-};
 
 export default withStyles(styles)(HeaderComponent);
