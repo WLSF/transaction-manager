@@ -23,6 +23,30 @@
     margin: 0 50px;
 }
 
+.dialog-expenses {
+    border-radius: 8px;
+}
+
+.MuiFormControl-fullWidth-255 {
+    // width: 420px !important;
+    max-width: 100%;
+}
+
+.row-value {
+    &1 {
+        color: red;
+        &::before {
+            content: ' - ';
+        }
+    }
+    &0 {
+        color: green;
+        &::before {
+            content: '+ ';
+        }
+    }
+}
+
 .table-paper {
     padding: 0 100px;
     height: 100vh;

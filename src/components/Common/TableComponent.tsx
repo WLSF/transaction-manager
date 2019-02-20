@@ -8,13 +8,15 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
 import { BalanceSeparator } from './BalanceSeparator';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
+import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, FormControlLabel, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
 import moment from 'moment';
 import { add } from '../../util/HttpConnector'
-
+import { MuiPickersUtilsProvider } from 'material-ui-pickers';
+import { DatePicker } from 'material-ui-pickers';
+import MomentUtils from '@date-io/moment';
 
 export interface IObject {
-    description: string, value: string, type: string, tax: string
+    description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
 }
 
 function TableComponent(props) {
@@ -25,9 +27,11 @@ function TableComponent(props) {
     const [description, setDescription] = useState('');
     const [taxes, setTaxes] = useState(0);
     const [tax, setTax] = useState('');
+    const [dateValue, setDateValue] = useState(moment().format('YYYY-MM-DD').toString());
+    const [isPaid, setIsPaid] = useState(false);
 
     const [object] = useState({
-        description, value, type, tax
+        description, value, type, tax, dateValue, isPaid
     })
 
     const [open, setOpen] = useState(false);
@@ -35,7 +39,8 @@ function TableComponent(props) {
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
-    const [today, setToday] = useState('')
+    const [today, setToday] = useState('');
+
     useEffect(() => {
         setToday(moment().format('MMMM Do YYYY'));
     }, [today]);
@@ -47,7 +52,7 @@ function TableComponent(props) {
             let newValue: number = 0;
             let newTaxes: number = 0;
             rows.map((el: any) => {
-                newValue = newValue + Number(el.value);
+                newValue = (el.type === 0 ? (newValue + Number(el.value)) : (newValue - Number(el.value)));
                 newTaxes = newTaxes + Number(el.tax);
             });
             setBalance(newValue);
@@ -84,11 +89,11 @@ function TableComponent(props) {
                                 <TableCell component="th" scope="row">
                                     {row.description}
                                 </TableCell>
-                                <TableCell align="right">
-                                    {new Intl.NumberFormat('pt-BR', {
+                                <TableCell align="right" >
+                                    <span className={`row-value${row.type}`}>{new Intl.NumberFormat('pt-BR', {
                                         style: 'currency',
                                         currency: 'BRL'
-                                    }).format(row.value)}
+                                    }).format(row.value)}</span>
                                 </TableCell>
                                 <TableCell align="right">{new Intl.NumberFormat('pt-BR', {
                                     style: 'currency',
@@ -100,10 +105,9 @@ function TableComponent(props) {
                                     }
                                 </TableCell>
                                 <TableCell>
-                                    <button className="trigger"><span>
-                                    </span>
-                                    </button>
-
+                                    {row.isPaid ?
+                                        <Icon style={{ color: "green" }}>done_all</Icon>
+                                        : <Icon style={{ color: "red" }}>delete_outline</Icon>}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -194,66 +198,125 @@ function TableComponent(props) {
             <Dialog
                 open={open}
                 aria-labelledby="form-dialog-title"
+                className="dialog-expenses"
             >
                 <DialogTitle id="form-dialog-title">Insert Transaction</DialogTitle>
                 <DialogContent>
-                    <DialogContentText>
-                        Transaction Details
-      </DialogContentText>
+
                     <div className="input-content">
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Description"
-                            type="text"
-                            value={description}
-                            onChange={(event) => {
-                                setDescription(event.target.value);
-                            }}
-                            fullWidth
-                        />
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="name"
-                            label="Transaction Value"
-                            type="number"
-                            value={value}
-                            onChange={(event) => {
-                                setValue(event.target.value);
-                            }}
-                            fullWidth
-                        />
 
-                        <TextField
-                            autoFocus
-                            margin="dense"
-                            id="tax"
-                            label="Transaction Tax"
-                            type="number"
-                            value={tax}
-                            onChange={(event: any) => {
-                                setTax(event.target.value);
-                            }}
-                            fullWidth
-                        />
 
-                        <FormControl>
-                            <InputLabel htmlFor="age-helper">Age</InputLabel>
-                            <Select
-                                value={type}
-                                style={{ width: "452px" }}
-                                onChange={(event) => {
-                                    setType(event.target.value);
-                                }}
-                                input={<Input name="age" id="age-helper" />}
-                            >
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Icon>border_color</Icon>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    margin="dense"
+                                    id="name"
+                                    label="Transaction Description"
+                                    type="text"
+                                    value={description}
+                                    onChange={(event) => {
+                                        setDescription(event.target.value);
+                                    }}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Icon>date_range</Icon>
+                            </Grid>
+                            <Grid item>
+                                <MuiPickersUtilsProvider utils={MomentUtils}>
+                                    <DatePicker value={dateValue} disablePast={true} format={"DD/MM/YYYY"} onChange={(event) => { setDateValue(moment(event._d).format('YYYY-MM-DD').toString()) }} />
+                                </MuiPickersUtilsProvider>
 
-                                <MenuItem value={0}>Credit</MenuItem>
-                                <MenuItem value={1}>Debit</MenuItem>
-                            </Select>
-                        </FormControl>
+                            </Grid>
+                        </Grid>
+
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Icon>local_atm</Icon>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+
+                                    margin="dense"
+                                    id="name"
+                                    label="Transaction Value"
+                                    type="number"
+                                    value={value}
+                                    onChange={(event) => {
+                                        setValue(event.target.value);
+                                    }}
+                                    fullWidth
+                                />
+                            </Grid>
+                            <Grid item>
+                                <Icon>money_off</Icon>
+                            </Grid>
+                            <Grid item>
+                                <TextField
+                                    margin="dense"
+                                    id="tax"
+                                    label="Transaction Tax"
+                                    type="number"
+                                    value={tax}
+                                    onChange={(event: any) => {
+                                        setTax(event.target.value);
+                                    }}
+                                    fullWidth
+                                />
+
+                            </Grid>
+                        </Grid>
+
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Icon>insert_chart</Icon>
+                            </Grid>
+                            <Grid item>
+                                {/* //TODO: transaction / income */}
+                                <FormControl>
+                                    <InputLabel htmlFor="age-helper">Transaction Type</InputLabel>
+                                    <Select
+                                        value={type}
+                                        style={{ width: "182px" }}
+                                        onChange={(event) => {
+                                            setType(event.target.value);
+                                        }}
+
+                                        input={<Input name="transaction-type"
+
+                                            id="age-helper" />}
+                                    >
+                                        <MenuItem value={0}>Credit</MenuItem>
+                                        <MenuItem value={1}>Debit</MenuItem>
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                            <Grid item>
+                                <Icon>money_off</Icon>
+                            </Grid>
+                            <Grid item>
+
+                               <FormControlLabel
+          control={<Checkbox
+            checked={isPaid}
+            onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
+            color="primary"
+            value={isPaid}
+        />}
+          label="Is Paid?"
+        />
+                                
+                            </Grid>
+                        </Grid>
+
+
+
+
+
                     </div>
                 </DialogContent>
                 <DialogActions>
@@ -263,16 +326,18 @@ function TableComponent(props) {
 
                     //ON SUBMIT CLEAR FORM
                     <Button onClick={async () => {
+                        let func;
                         object.description = description;
                         object.type = type;
                         object.tax = tax;
                         object.value = value;
-                        let numb = await add(object, rows);
-                        setRows([numb, ...rows]);
-                        console.log(numb)
+                        object.dateValue = dateValue;
+                        object.isPaid = isPaid;
+                        func = await add(object, rows);
+                        setRows([func, ...rows]);
                     }} color="primary">
                         Insert
-      </Button>
+                     </Button>
                 </DialogActions>
             </Dialog>
 
