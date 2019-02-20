@@ -8,10 +8,13 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
 import { BalanceSeparator } from './BalanceSeparator';
-import { Dialog, DialogTitle, DialogContent, TextField, DialogContentText, NativeSelect, FormControl, DialogActions, Button, CardContent, CardActions, Card, IconButton, Typography, Collapse, withStyles, TablePagination, TableFooter, Divider } from '@material-ui/core';
-import Icon from '@material-ui/core/Icon';
+import { Dialog, DialogTitle, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
+import moment from 'moment';
+import { add } from '../../util/HttpConnector'
+
+
 export interface IObject {
-    description: string, value: number, type: number, tax: number
+    description: string, value: string, type: string, tax: string
 }
 
 function TableComponent(props) {
@@ -21,7 +24,7 @@ function TableComponent(props) {
     const [value, setValue] = useState('');
     const [description, setDescription] = useState('');
     const [taxes, setTaxes] = useState(0);
-    const [tax, setTax] = useState(0);
+    const [tax, setTax] = useState('');
 
     const [object] = useState({
         description, value, type, tax
@@ -29,9 +32,14 @@ function TableComponent(props) {
 
     const [open, setOpen] = useState(false);
     const [rows, setRows] = useState<IObject[]>([]);
-
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
+
+    const [today, setToday] = useState('')
+    useEffect(() => {
+        setToday(moment().format('MMMM Do YYYY'));
+    }, [today]);
+
 
     const [balance, setBalance] = useState(0);
     useEffect(() => {
@@ -57,13 +65,10 @@ function TableComponent(props) {
     }, [balance]
     );
 
-    const [isActive, setIsActive] = useState(false);
-    const [paidIcon, setPaidIcon] = useState('aspect_ratio');
-
     return (
         <>
-            <Paper >
-                <Table >
+            <Paper className="table-paper" >
+                <Table style={{ height: "200px" }} >
                     <TableHead>
                         <TableRow>
                             <TableCell>Description</TableCell>
@@ -104,7 +109,7 @@ function TableComponent(props) {
                         ))}
 
                     </TableBody>
-                    <TableFooter>
+                    <TableFooter style={{ float: "right" }}>
                         <TableRow>
                             <TablePagination
                                 rowsPerPageOptions={[5, 10, 25]}
@@ -132,127 +137,141 @@ function TableComponent(props) {
                         </TableRow>
                     </TableFooter>
                 </Table>
-            </Paper>
-
-            <Card className="balance-details" >
-                <CardContent>
-                    <div className="balance" style={{ maxWidth: "350px" }}> Total:
-                  <span className="total-balance">
+                <Card className="balance-details" >
+                    <CardHeader
+                        action={
+                            <>
+                                <Button color="inherit" className="button-include" onClick={() => setOpen(true)}>Include</Button>
+                                <IconButton>
+                                    <Button
+                                        className={(expanded === true) ? "expandOpen" : "expand"}
+                                        onClick={() => setExpand(!expanded)}
+                                        aria-expanded={expanded}
+                                        aria-label="Show more"
+                                    >
+                                        Expand
+                    </Button>
+                                </IconButton>
+                            </>}
+                        title="Total Amount"
+                        subheader={!expanded ? today : ''
+                        }
+                    />
+                    <CardContent>
+                        <span className="total-balance">
 
                             {new Intl.NumberFormat('pt-BR', {
                                 style: 'currency',
                                 currency: 'BRL'
                             }).format(balance)}</span>
-
-                    </div>
-                </CardContent>
-                <CardActions>
-                    <Button color="inherit" className="button-include" onClick={() => setOpen(true)}>Include</Button>
-                    <Button
-                        className={(expanded === true) ? "expandOpen" : "expand"}
-                        onClick={() => setExpand(!expanded)}
-                        aria-expanded={expanded}
-                        aria-label="Show more"
-                    >
-                        Expand
-                    </Button>
-                </CardActions>
-
-                <Collapse in={expanded} timeout="auto" unmountOnExit>
-                    <CardContent>
-                        <div className="balance" style={{ maxWidth: "350px" }}>
-                            <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL'
-                            }).format(taxes)}</span>
-                            <BalanceSeparator />
-                            <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL'
-                            }).format((balance - taxes))}</span>
-                        </div>
+                        <Typography variant="caption">
+                            Total Amount without taxes
+                                </Typography>
                     </CardContent>
-                </Collapse>
-            </Card>
+
+                    <Collapse in={expanded} className="collapse-card" timeout="auto" unmountOnExit>
+                        <CardContent>
+                            <div className="balance" style={{ maxWidth: "350px" }}>
+                                <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format(taxes)}</span>
+                                <BalanceSeparator />
+                                <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
+                                    style: 'currency',
+                                    currency: 'BRL'
+                                }).format((balance - taxes))}</span>
+                            </div>
+
+
+                        </CardContent>
+                    </Collapse>
+                </Card>
+
+
+            </Paper>
 
             <Dialog
                 open={open}
                 aria-labelledby="form-dialog-title"
             >
-                <DialogTitle id="form-dialog-title">Subscribe</DialogTitle>
+                <DialogTitle id="form-dialog-title">Insert Transaction</DialogTitle>
                 <DialogContent>
                     <DialogContentText>
-                        Insert Transaction
+                        Transaction Details
       </DialogContentText>
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Transaction Description"
-                        type="text"
-                        value={description}
-                        onChange={(event) => {
-                            setDescription(event.target.value);
-                        }}
-                        fullWidth
-                    />
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="name"
-                        label="Transaction Value"
-                        type="number"
-                        value={value}
-                        onChange={(event) => {
-                            setValue(event.target.value);
-                        }}
-                        fullWidth
-                    />
-
-                    <TextField
-                        autoFocus
-                        margin="dense"
-                        id="tax"
-                        label="Transaction Tax"
-                        type="number"
-                        value={tax}
-                        onChange={(event: any) => {
-                            setTax(event.target.value);
-                        }}
-                        fullWidth
-                    />
-                    <FormControl >
-                        <NativeSelect
-                            value={type}
-                            name="type"
+                    <div className="input-content">
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Transaction Description"
+                            type="text"
+                            value={description}
                             onChange={(event) => {
-                                setType(event.target.value);
+                                setDescription(event.target.value);
                             }}
-                        >
-                            <option value={0}>Credit</option>
-                            <option value={1}>Debit</option>
-                        </NativeSelect>
-                    </FormControl>
+                            fullWidth
+                        />
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="name"
+                            label="Transaction Value"
+                            type="number"
+                            value={value}
+                            onChange={(event) => {
+                                setValue(event.target.value);
+                            }}
+                            fullWidth
+                        />
+
+                        <TextField
+                            autoFocus
+                            margin="dense"
+                            id="tax"
+                            label="Transaction Tax"
+                            type="number"
+                            value={tax}
+                            onChange={(event: any) => {
+                                setTax(event.target.value);
+                            }}
+                            fullWidth
+                        />
+
+                        <FormControl>
+                            <InputLabel htmlFor="age-helper">Age</InputLabel>
+                            <Select
+                                value={type}
+                                style={{ width: "452px" }}
+                                onChange={(event) => {
+                                    setType(event.target.value);
+                                }}
+                                input={<Input name="age" id="age-helper" />}
+                            >
+
+                                <MenuItem value={0}>Credit</MenuItem>
+                                <MenuItem value={1}>Debit</MenuItem>
+                            </Select>
+                        </FormControl>
+                    </div>
                 </DialogContent>
                 <DialogActions>
                     <Button onClick={() => setOpen(!open)} color="primary">
                         Cancel
-      </Button>
+                     </Button>
 
                     //ON SUBMIT CLEAR FORM
-                    <Button onClick={() => {
+                    <Button onClick={async () => {
                         object.description = description;
                         object.type = type;
                         object.tax = tax;
                         object.value = value;
-                        console.log(object);
-                        axios.post<IObject>(`http://localhost:3131/transactions`, object)
-                            .then(res => {
-                                setRows([res.data, ...rows])
-                            })
-
+                        let numb = await add(object, rows);
+                        setRows([numb, ...rows]);
+                        console.log(numb)
                     }} color="primary">
-                        Subscribe
+                        Insert
       </Button>
                 </DialogActions>
             </Dialog>

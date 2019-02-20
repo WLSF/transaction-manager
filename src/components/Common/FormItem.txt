@@ -1,0 +1,14 @@
+// import * as React from "react";
+// import "./FormItemComponent.scss";
+
+// export class FormItemComponent extends React.Component<FormItemProps> {
+
+//     public render() {
+//         return (
+//             <FormItem colon={false} {...this.props}
+//                 className={`pbr-form-item ${this.props.className || ""}`}>
+//                 {this.props.children}
+//             </FormItem>
+//         );
+//     }
+// }

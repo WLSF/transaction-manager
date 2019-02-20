@@ -1,34 +1,51 @@
-.balance {
-    display: flex;
-    flex-direction: column;
-    justify-content: flex-start;
-    text-align: start;
-    & .total-balance {
-        display: inline-block;
-        font-weight: 600;
-        font-size: 32px;
-        color: #444750;
+.total-balance {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 32px;
+    color: #444750;
+}
+
+.tax-balance {
+    display: inline-block;
+    font-weight: 600;
+    font-size: 32px;
+    color: red;
+    &::before {
+        content: '- ';
     }
-    & .tax-balance {
-        display: inline-block;
-        font-weight: 600;
-        font-size: 32px;
-        color: red;
-        &::before {
-            content: '- ';
-        }
-    }
+}
+
+.collapse-card {
+    padding-top: 0;
+}
+
+.input-content {
+    margin: 0 50px;
+}
+
+.table-paper {
+    padding: 0 100px;
+    height: 100vh;
+    overflow: auto;
 }
 
 .balance-details {
     box-shadow: 0 6px 20px;
     margin-top: 15px;
+    width: 30vw;
+    bottom: 0;
+    position: fixed;
 }
 
 .button-include {
     padding-bottom: 100px;
     display: flex;
     justify-content: flex-end;
+}
+
+.card-actions {
+    float: right;
+    top: 0;
 }
 
 .expand {
@@ -42,65 +59,13 @@
     transform: 'rotate(180deg)',
 }
 
-// askjjdjaushd
-MuiIcon-root-53 {
-    width: 0;
-    height: 0;
-    overflow: hidden;
-    font-size: 0;
-    user-select: none;
-    flex-shrink: 0;
-}
-
-.box {
-    color: red;
-    transition: 0.5s;
-    -webkit-transition: 0.5s;
-    margin: 3px;
-    &:hover {
-        color: green;
-    }
-    &::before,
-    &::after {
-        z-index: 3;
-        content: '';
-        position: absolute;
-        box-sizing: border-box;
-        -webkit-transform: scale(0);
-        transition: 0.5s;
-    }
-}
-
-.foo {
-    &::before {
-        border-bottom: 3px solid #FFF;
-        border-left: 3px solid #FFF;
-        -webkit-transform-origin: 0 100%;
-    }
-    &::after {
-        border-top: 3px solid #FFF;
-        border-right: 3px solid #FFF;
-        -webkit-transform-origin: 100% 0%;
-    }
-}
-
-/* START THE SECOND ARTICLE */
-
-#paid:hover {
-    -webkit-transform: rotateZ(-30deg);
-    -ms-transform: rotateZ(-30deg);
-    transform: rotateZ(-30deg);
-}
-
 .trigger {
-    background-color: red;
     width: 35px;
     height: 35px;
     border: none;
     border-radius: 50%;
     overflow: hidden;
     text-indent: 100%;
-    color: transparent;
     white-space: nowrap;
     cursor: pointer;
     outline: none;
@@ -114,7 +79,7 @@ MuiIcon-root-53 {
     width: 31px;
     height: 4px;
     border-radius: 4px;
-    background: white;
+    background: rgb(46, 36, 129);
 }
 
 .trigger span {
