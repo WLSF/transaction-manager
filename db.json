@@ -1,115 +1,31 @@
 {
   "transactions": [
     {
-      "description": "deb",
-      "value": "50",
-      "type": 0,
-      "tax": "10",
+      "description": "Crossfit",
+      "value": "250",
+      "type": 1,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": true,
       "id": 1
     },
     {
-      "description": "débito",
-      "value": "20",
-      "type": 1,
-      "tax": "0",
+      "description": "Dívida Jana",
+      "value": "100",
+      "type": 0,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": true,
       "id": 2
     },
     {
-      "description": "Nova compra",
-      "value": "23",
-      "type": 1,
-      "tax": "3",
-      "dateValue": "2019 02 28",
+      "description": "Dívida Kleber",
+      "value": "400",
+      "type": 0,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": false,
       "id": 3
-    },
-    {
-      "description": "321",
-      "value": "33",
-      "type": 1,
-      "tax": "3",
-      "dateValue": "Wed Feb 20 2019 12:26:01 GMT-0300",
-      "id": 4
-    },
-    {
-      "description": "321",
-      "value": "33",
-      "type": 1,
-      "tax": "3",
-      "dateValue": "2019-02-24",
-      "id": 5
-    },
-    {
-      "description": "salário",
-      "value": "50000",
-      "type": 1,
-      "tax": "51",
-      "dateValue": "2019-02-20",
-      "id": 6
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "25",
-      "type": 0,
-      "tax": "0.5",
-      "dateValue": "2019-02-21",
-      "id": 7
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "250000",
-      "type": 0,
-      "tax": "0.5",
-      "dateValue": "2019-02-21",
-      "id": 8
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "2500000",
-      "type": 0,
-      "tax": "0.5",
-      "dateValue": "2019-02-21",
-      "id": 9
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "2500000",
-      "type": 0,
-      "tax": "07",
-      "dateValue": "2019-02-21",
-      "id": 10
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "2500000",
-      "type": 0,
-      "tax": "07",
-      "dateValue": "2019-02-21",
-      "id": 11
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "2500000",
-      "type": 0,
-      "tax": "07",
-      "dateValue": "2019-02-21",
-      "id": 12
-    },
-    {
-      "description": "Basqueteira Nike",
-      "value": "2500000",
-      "type": 0,
-      "tax": "07",
-      "dateValue": "2019-02-21",
-      "id": 13
-    },
-    {
-      "description": "wetw",
-      "value": "333",
-      "type": 1,
-      "tax": "7",
-      "dateValue": "2019-02-20",
-      "isPaid": true,
-      "id": 14
     }
   ]
 }

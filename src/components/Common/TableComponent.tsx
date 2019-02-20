@@ -77,10 +77,11 @@ function TableComponent(props) {
                     <TableHead>
                         <TableRow>
                             <TableCell>Description</TableCell>
-                            <TableCell align="right">Value</TableCell>
-                            <TableCell align="right">Tax</TableCell>
-                            <TableCell align="right">Type</TableCell>
-                            <TableCell align="right">Actions</TableCell>
+                            <TableCell align="center">Value</TableCell>
+                            <TableCell align="center">Date</TableCell>
+                            <TableCell align="center">Tax</TableCell>
+                            <TableCell align="center">Type</TableCell>
+                            <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
                     <TableBody>
@@ -89,25 +90,30 @@ function TableComponent(props) {
                                 <TableCell component="th" scope="row">
                                     {row.description}
                                 </TableCell>
-                                <TableCell align="right" >
+                                <TableCell align="center" >
                                     <span className={`row-value${row.type}`}>{new Intl.NumberFormat('pt-BR', {
                                         style: 'currency',
                                         currency: 'BRL'
                                     }).format(row.value)}</span>
                                 </TableCell>
-                                <TableCell align="right">{new Intl.NumberFormat('pt-BR', {
+                                <TableCell align="center">{new Intl.NumberFormat('pt-BR', {
                                     style: 'currency',
                                     currency: 'BRL'
                                 }).format(row.tax)}</TableCell>
-                                <TableCell align="right">
+                                <TableCell align="center">
                                     {row.type == 1 &&
                                         ("Débito") || ("Crédito")
                                     }
                                 </TableCell>
-                                <TableCell>
+
+                                <TableCell align="center">
+                                    {row.dateValue}
+                                </TableCell>
+
+                                <TableCell align="center">
                                     {row.isPaid ?
                                         <Icon style={{ color: "green" }}>done_all</Icon>
-                                        : <Icon style={{ color: "red" }}>delete_outline</Icon>}
+                                        : <Icon style={{ color: "red" }}>clear</Icon>}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -300,16 +306,16 @@ function TableComponent(props) {
                             </Grid>
                             <Grid item>
 
-                               <FormControlLabel
-          control={<Checkbox
-            checked={isPaid}
-            onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
-            color="primary"
-            value={isPaid}
-        />}
-          label="Is Paid?"
-        />
-                                
+                                <FormControlLabel
+                                    control={<Checkbox
+                                        checked={isPaid}
+                                        onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
+                                        color="primary"
+                                        value={isPaid}
+                                    />}
+                                    label="Is Paid?"
+                                />
+
                             </Grid>
                         </Grid>
 
