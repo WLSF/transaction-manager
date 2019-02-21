@@ -26,6 +26,15 @@
       "dateValue": "2019-02-20",
       "isPaid": false,
       "id": 3
+    },
+    {
+      "description": "DInheiro",
+      "value": "250",
+      "type": 0,
+      "tax": "0",
+      "dateValue": "2019-02-21",
+      "isPaid": true,
+      "id": 4
     }
   ]
 }

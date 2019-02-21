@@ -19,6 +19,7 @@ export interface IObject {
     description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
 }
 
+
 function TableComponent(props) {
 
     const [expanded, setExpand] = useState(false);
@@ -34,12 +35,16 @@ function TableComponent(props) {
         description, value, type, tax, dateValue, isPaid
     })
 
+    const [objectOriginal] = useState({ ...object });
+
+
     const [open, setOpen] = useState(false);
     const [rows, setRows] = useState<IObject[]>([]);
     const [page, setPage] = useState(0);
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [today, setToday] = useState('');
+    const [count, setCount] = useState(0);
 
     useEffect(() => {
         setToday(moment().format('MMMM Do YYYY'));
@@ -52,8 +57,10 @@ function TableComponent(props) {
             let newValue: number = 0;
             let newTaxes: number = 0;
             rows.map((el: any) => {
-                newValue = (el.type === 0 ? (newValue + Number(el.value)) : (newValue - Number(el.value)));
-                newTaxes = newTaxes + Number(el.tax);
+                if (el.isPaid === true) {
+                    newValue = (el.type === 0 ? (newValue + Number(el.value)) : (newValue - Number(el.value)));
+                    newTaxes = newTaxes + Number(el.tax);
+                }
             });
             setBalance(newValue);
             setTaxes(newTaxes);
@@ -78,9 +85,9 @@ function TableComponent(props) {
                         <TableRow>
                             <TableCell>Description</TableCell>
                             <TableCell align="center">Value</TableCell>
-                            <TableCell align="center">Date</TableCell>
                             <TableCell align="center">Tax</TableCell>
                             <TableCell align="center">Type</TableCell>
+                            <TableCell align="center">Date</TableCell>
                             <TableCell align="center">Actions</TableCell>
                         </TableRow>
                     </TableHead>
@@ -107,13 +114,18 @@ function TableComponent(props) {
                                 </TableCell>
 
                                 <TableCell align="center">
-                                    {row.dateValue}
+                                    {moment(`${row.dateValue}`).format('DD/MM')}
                                 </TableCell>
 
                                 <TableCell align="center">
-                                    {row.isPaid ?
-                                        <Tooltip title="Effective" placement="top-start"><Icon style={{ color: "green" }}>done_all</Icon></Tooltip>
-                                        : <Tooltip title="Cancel" placement="top-start"><Icon style={{ color: "red" }}>clear</Icon></Tooltip>}
+                                    {row.isPaid === true ?
+                                        <Tooltip title="Paid" placement="top-start"><Icon style={{ color: "green" }}>done_all</Icon></Tooltip>
+                                        : <Tooltip title="Click to Pay" placement="top-start"><Icon
+
+                                            onClick={(event) => {
+                                               row.isPaid = !row.isPaid;
+                                               console.log(row.isPaid)
+                                            }} style={{ color: "red" }}>clear</Icon></Tooltip>}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -341,6 +353,8 @@ function TableComponent(props) {
                         object.isPaid = isPaid;
                         func = await add(object, rows);
                         setRows([func, ...rows]);
+                        console.log(JSON.stringify(object));
+
                     }} color="primary">
                         Insert
                      </Button>

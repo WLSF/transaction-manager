@@ -1,8 +1,8 @@
-import React from 'react';
+import React, { useState } from 'react';
 import { Dialog, DialogTitle, DialogContent, Icon, TextField, Grid, MenuItem, FormControlLabel, Checkbox, DialogActions, Button, FormControl, InputLabel, Select, Input } from '@material-ui/core';
 
 export interface ICategory {
-    description: string, typeof: string, color: string, icon: string
+    description: string, type: string, color: string, icon: string
 }
 
 export interface IProps {
@@ -12,7 +12,16 @@ export interface IProps {
 
 }
 
+const [open, setOpen] = useState(false);
+const [color, setColor] = useState('');
+const [type, setType] = useState('');
+const [icon, setIcon] = useState('');
+const [value, setValue] = useState('');
+const [description, setDescription] = useState('');
+
 export default class CategoryModal extends React.Component<IProps>{
+
+
     public render() {
         <Dialog
             open={open}
@@ -77,9 +86,9 @@ export default class CategoryModal extends React.Component<IProps>{
                                 id="tax"
                                 label="Transaction Tax"
                                 type="number"
-                                value={tax}
+                                value={type}
                                 onChange={(event: any) => {
-                                    setTax(event.target.value);
+                                    setType(event.target.value);
                                 }}
                                 fullWidth
                             />
@@ -114,19 +123,7 @@ export default class CategoryModal extends React.Component<IProps>{
                         <Grid item>
                             <Icon>money_off</Icon>
                         </Grid>
-                        <Grid item>
 
-                            <FormControlLabel
-                                control={<Checkbox
-                                    checked={isPaid}
-                                    onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
-                                    color="primary"
-                                    value={isPaid}
-                                />}
-                                label="Is Paid?"
-                            />
-
-                        </Grid>
                     </Grid>
 
 
@@ -140,19 +137,14 @@ export default class CategoryModal extends React.Component<IProps>{
                     Cancel
                  </Button>
 
-                //ON SUBMIT CLEAR FORM
+
                 <Button onClick={async () => {
-                    await add(object, rows);
+                    // await add(object, rows);
                 }} color="primary">
                     Insert
                  </Button>
             </DialogActions>
         </Dialog>
 
-
-        return React.createElement(this.props.open, {
-            className: `pbr-standard-title ${this.props.className}`, style, id: this.props.id,
-        },
-            this.props.children);
     }
 }
