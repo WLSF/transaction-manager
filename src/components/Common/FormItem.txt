@@ -1,14 +1,12 @@
-// import * as React from "react";
-// import "./FormItemComponent.scss";
 
-// export class FormItemComponent extends React.Component<FormItemProps> {
+//TODO: 
 
-//     public render() {
-//         return (
-//             <FormItem colon={false} {...this.props}
-//                 className={`pbr-form-item ${this.props.className || ""}`}>
-//                 {this.props.children}
-//             </FormItem>
-//         );
-//     }
-// }
+- criar tags para categorias
+- editar e excluir categorias 
+- limpar cache
+- efetivar transação
+- mover de categoria 
+- filtrar transação por categoria
+- filtrar transação 
+- listar categorias
+- criar rotasw

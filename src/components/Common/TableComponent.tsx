@@ -8,7 +8,7 @@ import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
 import { BalanceSeparator } from './BalanceSeparator';
-import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, FormControlLabel, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
+import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Tooltip, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, FormControlLabel, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
 import moment from 'moment';
 import { add } from '../../util/HttpConnector'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
@@ -112,8 +112,8 @@ function TableComponent(props) {
 
                                 <TableCell align="center">
                                     {row.isPaid ?
-                                        <Icon style={{ color: "green" }}>done_all</Icon>
-                                        : <Icon style={{ color: "red" }}>clear</Icon>}
+                                        <Tooltip title="Effective" placement="top-start"><Icon style={{ color: "green" }}>done_all</Icon></Tooltip>
+                                        : <Tooltip title="Cancel" placement="top-start"><Icon style={{ color: "red" }}>clear</Icon></Tooltip>}
                                 </TableCell>
                             </TableRow>
                         ))}
