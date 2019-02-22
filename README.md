@@ -25,34 +25,39 @@
 
 ## Installation
 
-- All the `code` required to get started
-- Images of what it should look like
-
 ### Clone
 
-- Clone this repo to your local machine using `https://github.com/fvcproductions/SOMEREPO`
+- Clone this repo to your local machine using `$ git clone https://github.com/amendx/transaction-manager/`
 
 ### Setup
 
-- If you want more syntax highlighting, format your code like this:
-
-> update and install this package first
-
-```shell
-$ brew update
-$ brew install fvcproductions
-```
-
-> now install npm and bower packages
+> install all dependencies first
 
 ```shell
 $ npm install
-$ bower install
+```
+or 
+
+```shell
+$ yarn add
 ```
 
-## Contributing
+> now run the local database (don't worry, this will only create a file called ```db.json``` inside the project root so all data can be stored and retrieved )
 
-> To get started...
+```shell
+$ npm run rundb
+```
+
+> after that, feel free to run
+```shell
+$ npm start
+```
+> or if you want
+
+```shell
+$ yarn start
+```
+
 
 ### Step 1
 
@@ -60,15 +65,30 @@ $ bower install
     - 🍴 Fork this repo!
 
 - **Option 2**
-    - 👯 Clone this repo to your local machine using `https://github.com/joanaz/HireDot2.git`
+    - 👯 Clone this repo to your local machine using `https://github.com/amendx/transaction-manager`
 
 ### Step 2
-
-- **HACK AWAY!** 🔨🔨🔨
+- **Money, Honey**
+    - 🐢 Check your account balance this month, see if you've been spending too much on food...
+    
+    - **Let's rock**
+    - 🐙 Add a new Income or Expense, choose your own category and setup if there's been an tax toll. 
+    
+     - **All In**
+    - 🌟 Remember to check the "is paid" option if it's a transaction that has already been credited or debited (or if your mom has paid you back...), otherwise, it will be only 👻 **ghost money** 👻 
+    
+    
+- **SPEND AWAY!** 🔨🔨🔨
 
 ### Step 3
 
-- 🔃 Create a new pull request using <a href="https://github.com/joanaz/HireDot2/compare/" target="_blank">`https://github.com/joanaz/HireDot2/compare/`</a>.
+
+ - 📢 Repeat after me....
+
+
+💯💯💯💯💯💯💯💯💯
+#   *YOU'RE HIRED* 
+💯💯💯💯💯💯💯💯💯 
 
 ---
 
