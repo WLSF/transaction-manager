@@ -5,10 +5,7 @@ import SpeedDialIcon from '@material-ui/lab/SpeedDialIcon';
 import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import { Icon } from '@material-ui/core';
 
-export interface IProps {
-    event?: any
-    open: boolean
-}
+
 const actions = [
     { icon: <Icon>star</Icon>, name: 'Copy' },
     { icon: <Icon>star</Icon>, name: 'Save' },
@@ -19,10 +16,10 @@ const actions = [
 
 
 
-export class AddTransaction extends React.Component<IProps> {
+function AddTransaction(){
 
-    public render() {
-        const [setOpen] = useState(this.props.open);
+    
+        const [open, setOpen] = useState(false);
         return (
 
             <SpeedDial
@@ -47,5 +44,7 @@ export class AddTransaction extends React.Component<IProps> {
                     />
                 ))} */}
             </SpeedDial>)
-    }
+    
 }
+
+export default AddTransaction;

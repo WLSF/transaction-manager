@@ -1,7 +1,7 @@
 import React from 'react';
 import './BalanceComponent.scss';
 import { Icon, Fab } from '@material-ui/core'
-import { AddTransaction } from './AddTransaction';
+import  AddTransaction  from './AddTransaction';
 
 export interface IBalanceSeparator {
     style?: React.CSSProperties;
