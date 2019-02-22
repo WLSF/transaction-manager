@@ -5,6 +5,7 @@
   "dependencies": {
     "@date-io/moment": "^1.1.0",
     "@material-ui/core": "^3.9.2",
+    "@material-ui/lab": "^3.0.0-alpha.30",
     "@types/jest": "^24.0.6",
     "@types/node": "^11.9.4",
     "@types/react": "^16.8.3",
@@ -22,7 +23,7 @@
     "start": "react-scripts start",
     "build": "react-scripts build",
     "test": "react-scripts test",
-    "eject": "react-scripts eject"
+    "rundb": "npx json-server --watch db.json --port 3131"
   },
   "eslintConfig": {
     "extends": "react-app"

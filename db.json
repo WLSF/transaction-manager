@@ -45,5 +45,12 @@
       "isPaid": false,
       "id": 5
     }
+  ],
+  "categories": [
+    {
+      "description": "House Expenses",
+      "id": 1,
+      "type": 1
+    }
   ]
 }

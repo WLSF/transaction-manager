@@ -7,19 +7,21 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
-import { BalanceSeparator } from './BalanceSeparator';
-import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Tooltip, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, FormControlLabel, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
+import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, Tooltip, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, FormControlLabel, InputLabel, Select, Input, MenuItem, Fab } from '@material-ui/core';
 import moment from 'moment';
 import { add, getById, edit } from '../../util/HttpConnector'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import { DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
-import CategoryModal from './CategoryModal';
+import { BalanceComponent } from './BalanceComponent';
 
 export interface IObject {
     id: number, description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
 }
 
+export interface ICategory {
+    id: number, name: string, type: string
+}
 
 function TableComponent(props) {
 
@@ -30,14 +32,17 @@ function TableComponent(props) {
     const [description, setDescription] = useState('');
     const [taxes, setTaxes] = useState(0);
     const [tax, setTax] = useState('');
+    const [incomes, setIncomes] = useState(0);
+    const [expenses, setExpenses] = useState(0);
     const [dateValue, setDateValue] = useState(moment().format('YYYY-MM-DD').toString());
     const [isPaid, setIsPaid] = useState(false);
+
 
     const [object] = useState({
         id, description, value, type, tax, dateValue, isPaid
     })
-
-    const [editObject, setEditObject] = useState<IObject[]>([]);
+    const [categories, setCategories] = useState<ICategory[]>([]);
+    const [category, setCategory] = useState('');
 
     const [open, setOpen] = useState(false);
     const [rows, setRows] = useState<IObject[]>([]);
@@ -54,21 +59,28 @@ function TableComponent(props) {
     const [balance, setBalance] = useState(0);
     useEffect(() => {
         if (rows.length > 0) {
+            let incomes: number = 0;
+            let expenses: number = 0;
+
             let newValue: number = 0;
             let newTaxes: number = 0;
             rows.map((el: any) => {
                 if (el.isPaid === true) {
                     newValue = (el.type === 0 ? (newValue + Number(el.value)) : (newValue - Number(el.value)));
                     newTaxes = newTaxes + Number(el.tax);
+                    if (el.type === 0)
+                        incomes += Number(el.value);
+                    else
+                        expenses += Number(el.value)
                 }
             });
-            setBalance(newValue);
+            setIncomes(incomes);
+            setExpenses(expenses);
             setTaxes(newTaxes);
 
         }
     }, [rows.length, object]
     );
-    //usually used as didMount && didUpdate
     useEffect(() => {
         axios.get(`http://localhost:3131/transactions`)
             .then(res => {
@@ -77,8 +89,34 @@ function TableComponent(props) {
     }, [balance]
     );
 
+    useEffect(() => {
+        axios.get(`http://localhost:3131/categories`)
+            .then(res => {
+                setCategories(res.data);
+            });
+    }, [category]
+    );
+
     return (
         <>
+            <BalanceComponent
+                expenses={new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(expenses)}
+                taxes={
+                    new Intl.NumberFormat('pt-BR', {
+                        style: 'currency',
+                        currency: 'BRL'
+                    }).format(taxes)
+                }
+                income={new Intl.NumberFormat('pt-BR', {
+                    style: 'currency',
+                    currency: 'BRL'
+                }).format(incomes)}
+
+
+            />
             <Paper className="table-paper" >
                 <Table style={{ height: "200px" }} >
                     <TableHead>
@@ -92,7 +130,7 @@ function TableComponent(props) {
                         </TableRow>
                     </TableHead>
                     <TableBody>
-                        {rows.map((row: any) => (
+                        {rows && rows.map((row: any) => (
                             <TableRow key={row.id}>
                                 <TableCell component="th" scope="row">
                                     {row.description}
@@ -122,9 +160,7 @@ function TableComponent(props) {
                                         <Tooltip title="Paid" placement="top-start"><Icon style={{ color: "green" }}>done_all</Icon></Tooltip>
                                         : <Tooltip title="Click to Pay" placement="top-start"><Icon
 
-                                            onClick={async (event) => {
-                                                <CategoryModal open={true} />
-                                            }} style={{ color: "red" }}>clear</Icon></Tooltip>}
+                                            style={{ color: "red" }}>clear</Icon></Tooltip>}
                                 </TableCell>
                             </TableRow>
                         ))}
@@ -156,64 +192,19 @@ function TableComponent(props) {
                                 }}
                             />
                         </TableRow>
+
+
+
                     </TableFooter>
+
                 </Table>
-                <Card className="balance-details" >
-                    <CardHeader
-                        action={
-                            <>
-                                <Button color="inherit" className="button-include" onClick={() => setOpen(true)}>Include</Button>
-                                <IconButton>
-                                    <Button
-                                        className={(expanded === true) ? "expandOpen" : "expand"}
-                                        onClick={() => setExpand(!expanded)}
-                                        aria-expanded={expanded}
-                                        aria-label="Show more"
-                                    >
-                                        Expand
-                    </Button>
-                                </IconButton>
-                            </>}
-                        title="Total Amount"
-                        subheader={!expanded ? today : ''
-                        }
-                    />
-                    <CardContent>
-                        <span className="total-balance">
-
-                            {new Intl.NumberFormat('pt-BR', {
-                                style: 'currency',
-                                currency: 'BRL'
-                            }).format(balance)}</span>
-                        <Typography variant="caption">
-                            Total Amount without taxes
-                                </Typography>
-                    </CardContent>
-
-                    <Collapse in={expanded} className="collapse-card" timeout="auto" unmountOnExit>
-                        <CardContent>
-                            <div className="balance" style={{ maxWidth: "350px" }}>
-                                <span className="tax-balance">{new Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL'
-                                }).format(taxes)}</span>
-                                <BalanceSeparator />
-                                <span className="total-balance">  {new Intl.NumberFormat('pt-BR', {
-                                    style: 'currency',
-                                    currency: 'BRL'
-                                }).format((balance - taxes))}</span>
-                            </div>
-
-
-                        </CardContent>
-                    </Collapse>
-                </Card>
-
 
             </Paper>
 
+
+
+            {/* DIALOG */}
             <Dialog
-                itemProps={object}
                 open={open}
                 aria-labelledby="form-dialog-title"
                 className="dialog-expenses"
@@ -331,7 +322,31 @@ function TableComponent(props) {
                         </Grid>
 
 
+                        <Grid container spacing={8} alignItems="flex-end">
+                            <Grid item>
+                                <Icon>dns</Icon>
+                            </Grid>
+                            <Grid item>
+                                <FormControl>
+                                    <InputLabel htmlFor="cat-helper">Category</InputLabel>
+                                    <Select
+                                        value={category}
+                                        style={{ width: "202px" }}
+                                        onChange={(event) => {
+                                            setCategory(event.target.value);
+                                        }}
 
+                                        input={<Input name="category-type"
+
+                                            id="cat-helper" />}
+                                    >
+                                        {categories && categories.map((el: any) => (
+                                            <MenuItem value={el.id}> {el.description}</MenuItem>
+                                        ))}
+                                    </Select>
+                                </FormControl>
+                            </Grid>
+                        </Grid>
 
 
                     </div>
@@ -341,7 +356,6 @@ function TableComponent(props) {
                         Cancel
                      </Button>
 
-                    //ON SUBMIT CLEAR FORM
                     <Button onClick={async () => {
                         let func;
                         object.description = description;

@@ -25,9 +25,14 @@ async function getById(object: IObject) {
 }
 
 
+async function getCategories() {
+    const returnable = (await axios.get<IObject>(`http://localhost:3131/categories`)).data;
+    return returnable;
+}
 
 
-export { add, getById, get, edit };
+
+export { add, getById, get, edit, getCategories };
 
 
 

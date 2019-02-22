@@ -1,0 +1,79 @@
+.cards-info {
+    margin: 30px;
+    margin-top: 20px;
+    display: -ms-flexbox;
+    display: flex;
+    -ms-flex-pack: justify;
+    justify-content: space-between; // width: 100%;
+    cursor: default;
+    position: relative;
+}
+
+.card-total {
+    width: 100%;
+    &.expenses,
+    &.taxes {
+        & .card-icon-border {
+            background-color: #f44336;
+        }
+        & .card-description {
+            color: #f44336;
+        }
+    }
+    &.incomes {
+        & .card-icon-border {
+            background-color: #4caf50;
+        }
+        & .card-description {
+            color: #4caf50;
+        }
+    }
+}
+
+.card-icon-border {
+    height: 60px;
+    margin-top: 10px;
+    width: 60px;
+    position: absolute;
+    border-radius: 15px 30px 30px 15px;
+    text-align: center;
+    & .icon {
+        font-size: 1.8rem;
+        color: #fff;
+        margin: 15px;
+    }
+}
+
+.card-content {
+    display: flex;
+    margin-left: 6px;
+    width: 35%;
+    height: 70px;
+    -ms-flex-direction: column;
+    flex-direction: column;
+    -ms-flex-align: end;
+    align-items: flex-end;
+    -ms-flex-pack: center;
+    justify-content: center;
+    padding: 0;
+    padding-left: 40px;
+    padding-right: 16px;
+    border-radius: 15px;
+    box-shadow: 0 10px 20px rgba(0, 0, 0, 0.19), 0 6px 6px rgba(0, 0, 0, 0.23);
+    background-color: #fff;
+    & .card-description {
+        text-align: right;
+        text-transform: uppercase;
+    }
+}
+
+.add-transaction {
+    margin: 5px;
+    width: 60px;
+    height: 60px;
+    bottom: 0%;
+    float: right;
+    right: 5%;
+    top: 58%;
+    position: fixed;
+}
