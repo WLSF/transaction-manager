@@ -7,14 +7,11 @@ import TableRow from '@material-ui/core/TableRow';
 import Paper from '@material-ui/core/Paper';
 import axios from 'axios';
 import './TableComponent.scss';
-import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, Tooltip, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, FormControlLabel, InputLabel, Select, Input, MenuItem, Fab } from '@material-ui/core';
+import { Icon, Tooltip, TablePagination, TableFooter } from '@material-ui/core';
 import moment from 'moment';
-import { add, getById, edit } from '../../util/HttpConnector'
-import { MuiPickersUtilsProvider } from 'material-ui-pickers';
-import { DatePicker } from 'material-ui-pickers';
-import MomentUtils from '@date-io/moment';
 import { BalanceComponent } from './BalanceComponent';
 import AddTransaction from './AddTransaction';
+import TransactionDialog from './TransactionDialog';
 
 export interface IObject {
     id: number, description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
@@ -167,214 +164,14 @@ function TableComponent(props) {
                         ))}
 
                     </TableBody>
-                    <TableFooter style={{ float: "right" }}>
+                    <TableFooter>
                         <TableRow>
-                            <TablePagination
-                                rowsPerPageOptions={[5, 10, 25]}
-                                component="span"
-                                count={rows.length}
-                                rowsPerPage={rowsPerPage}
-                                page={page}
-                                backIconButtonProps={{
-                                    'aria-label': 'Previous Page',
-                                }}
-                                nextIconButtonProps={{
-                                    'aria-label': 'Next Page',
-                                }}
-                                onChangePage={(event, page) => {
-                                    setPage(page);
-                                    console.log(page);
-                                    console.log(event);
-                                }}
-                                onChangeRowsPerPage={(event) => {
-                                    console.log(event.target.value);
-                                    setRowsPerPage(Number(event.target.value));
-
-                                }}
-                            />
+                            <AddTransaction onIncomeClick={() => {}} onExpenseClick={() => {}} />
                         </TableRow>
-                                    <span onClick={() =>setOpen(true)}>
-                        <AddTransaction  />
-                        </span>
                     </TableFooter>
-
                 </Table>
-
+                {/* <TransactionDialog type={1} /> */}
             </Paper>
-
-
-
-            {/* DIALOG */}
-            <Dialog
-                open={open}
-                aria-labelledby="form-dialog-title"
-                className="dialog-expenses"
-            >
-                <DialogTitle id="form-dialog-title">Insert Transaction</DialogTitle>
-                <DialogContent>
-
-                    <div className="input-content">
-
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <Icon>border_color</Icon>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    margin="dense"
-                                    id="name"
-                                    label="Transaction Description"
-                                    type="text"
-                                    value={object.description}
-                                    onChange={(event) => {
-                                        setDescription(event.target.value);
-                                    }}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Icon>date_range</Icon>
-                            </Grid>
-                            <Grid item>
-                                <MuiPickersUtilsProvider utils={MomentUtils}>
-                                    <DatePicker value={dateValue} disablePast={true} format={"DD/MM/YYYY"} onChange={(event) => { setDateValue(moment(event._d).format('YYYY-MM-DD').toString()) }} />
-                                </MuiPickersUtilsProvider>
-
-                            </Grid>
-                        </Grid>
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <Icon>local_atm</Icon>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-
-                                    margin="dense"
-                                    id="name"
-                                    label="Transaction Value"
-                                    type="number"
-                                    value={value}
-                                    onChange={(event) => {
-                                        setValue(event.target.value);
-                                    }}
-                                    fullWidth
-                                />
-                            </Grid>
-                            <Grid item>
-                                <Icon>money_off</Icon>
-                            </Grid>
-                            <Grid item>
-                                <TextField
-                                    margin="dense"
-                                    id="tax"
-                                    label="Transaction Tax"
-                                    type="number"
-                                    value={tax}
-                                    onChange={(event: any) => {
-                                        setTax(event.target.value);
-                                    }}
-                                    fullWidth
-                                />
-
-                            </Grid>
-                        </Grid>
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <Icon>insert_chart</Icon>
-                            </Grid>
-                            <Grid item>
-                                <FormControl>
-                                    <InputLabel htmlFor="age-helper">Transaction Type</InputLabel>
-                                    <Select
-                                        value={type}
-                                        style={{ width: "182px" }}
-                                        onChange={(event) => {
-                                            setType(event.target.value);
-                                        }}
-
-                                        input={<Input name="transaction-type"
-
-                                            id="age-helper" />}
-                                    >
-                                        <MenuItem value={0}>Credit</MenuItem>
-                                        <MenuItem value={1}>Debit</MenuItem>
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                            <Grid item>
-                                <Icon>money_off</Icon>
-                            </Grid>
-                            <Grid item>
-
-                                <FormControlLabel style={{ alignItems: "flex-end" }}
-                                    control={<Checkbox
-                                        checked={isPaid}
-                                        onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
-                                        color="primary"
-                                        value={isPaid}
-                                    />}
-                                    label="Is Paid?"
-                                />
-
-                            </Grid>
-                        </Grid>
-
-
-                        <Grid container spacing={8} alignItems="flex-end">
-                            <Grid item>
-                                <Icon>dns</Icon>
-                            </Grid>
-                            <Grid item>
-                                <FormControl>
-                                    <InputLabel htmlFor="cat-helper">Category</InputLabel>
-                                    <Select
-                                        value={category}
-                                        style={{ width: "202px" }}
-                                        onChange={(event) => {
-                                            setCategory(event.target.value);
-                                        }}
-
-                                        input={<Input name="category-type"
-
-                                            id="cat-helper" />}
-                                    >
-                                        {categories && categories.map((el: any) => (
-                                            <MenuItem value={el.id}> {el.description}</MenuItem>
-                                        ))}
-                                    </Select>
-                                </FormControl>
-                            </Grid>
-                        </Grid>
-
-
-                    </div>
-                </DialogContent>
-                <DialogActions>
-                    <Button onClick={() => setOpen(!open)} color="primary">
-                        Cancel
-                     </Button>
-
-                    <Button onClick={async () => {
-                        let func;
-                        object.description = description;
-                        object.type = type;
-                        object.tax = tax;
-                        object.value = value;
-                        object.dateValue = dateValue;
-                        object.isPaid = isPaid;
-                        func = await add(object);
-                        setRows([func, ...rows]);
-                        console.log(JSON.stringify(object));
-
-                    }} color="primary">
-                        Insert
-                     </Button>
-                </DialogActions>
-            </Dialog>
-
         </>
 
     );
