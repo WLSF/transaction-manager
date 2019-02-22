@@ -6,15 +6,15 @@ import SpeedDialAction from '@material-ui/lab/SpeedDialAction';
 import { Icon } from '@material-ui/core';
 import './AddTransaction.scss';
 
-const actions = [
-    { icon: <Icon className="speed-actions-i">trending_up</Icon>, name: 'Income' },
-    { icon: <Icon className="speed-actions-e">trending_down</Icon>, name: 'Expenses' },
-
-];
 
 
 
 function AddTransaction(props) {
+    const { onIncomeClick, onExpenseClick } = props;
+    const actions = [
+        { icon: <Icon className="speed-actions-i">trending_up</Icon>, name: 'Income', onClick: onIncomeClick },
+        { icon: <Icon className="speed-actions-e">trending_down</Icon>, name: 'Expenses', onExpenseClick },
+    ];
     const [open, setOpen] = useState(false);
     // const [type, setType] = useState(0);
     return (
@@ -37,9 +37,7 @@ function AddTransaction(props) {
                     key={action.name}
                     icon={action.icon}
                     tooltipTitle={action.name}
-                    onClick={(el) => {
-
-                    }}
+                    onClick={action.onClick}
                 />
             ))}
         </SpeedDial>)
