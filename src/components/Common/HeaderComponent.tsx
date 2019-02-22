@@ -8,6 +8,7 @@ import './HeaderComponent.scss';
 import TableComponent from './TableComponent';
 import Icon from '@material-ui/core/Icon';
 import { Badge, MenuItem } from '@material-ui/core';
+import AddTransaction from './AddTransaction';
 
 const styles = {
     root: {
@@ -46,6 +47,9 @@ function HeaderComponent(props) {
             </AppBar>
 
             <TableComponent />
+
+           
+
         </div>
     );
 }

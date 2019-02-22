@@ -14,6 +14,7 @@ import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import { DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
 import { BalanceComponent } from './BalanceComponent';
+import AddTransaction from './AddTransaction';
 
 export interface IObject {
     id: number, description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
@@ -192,9 +193,9 @@ function TableComponent(props) {
                                 }}
                             />
                         </TableRow>
-
-
-
+                                    <span onClick={() =>setOpen(true)}>
+                        <AddTransaction  />
+                        </span>
                     </TableFooter>
 
                 </Table>

@@ -1,7 +1,7 @@
 import React from 'react';
 import './BalanceComponent.scss';
-import { Icon, Fab } from '@material-ui/core'
-import  AddTransaction  from './AddTransaction';
+import { Icon, Fab, Typography } from '@material-ui/core'
+import AddTransaction from './AddTransaction';
 
 export interface IBalanceSeparator {
     style?: React.CSSProperties;
@@ -43,9 +43,16 @@ export class BalanceComponent extends React.Component<IBalanceSeparator> {
                             <div className="card-value">{this.props.taxes}</div>
                         </div>
                     </div>
-                </div>
 
-                <AddTransaction />
+                    <div className="card-total add">
+                        <div className="card-content">
+                            <div className="card-description"><Typography variant="caption">
+                                Add new transaction</Typography></div>
+
+                            <AddTransaction />
+                        </div>
+                    </div>
+                </div>
 
 
 
@@ -53,4 +60,4 @@ export class BalanceComponent extends React.Component<IBalanceSeparator> {
         );
     }
 }
-{/* <Button color="inherit" className="button-include" onClick={() => setOpen(true)}>Include</Button> */ }
+{/*  */ }
