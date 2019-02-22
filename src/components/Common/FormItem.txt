@@ -10,3 +10,7 @@
 - filtrar transação 
 - listar categorias
 - criar rotasw
+
+
+// nao pode editar pq já foi criado transações  
+somente efetivar

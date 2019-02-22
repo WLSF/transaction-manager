@@ -10,18 +10,20 @@ import './TableComponent.scss';
 import { BalanceSeparator } from './BalanceSeparator';
 import { Dialog, DialogTitle, Icon, Grid, DialogContent, TextField, DialogContentText, FormControl, DialogActions, Button, CardContent, Tooltip, Checkbox, Card, IconButton, Typography, Collapse, TablePagination, TableFooter, CardHeader, FormControlLabel, InputLabel, Select, Input, MenuItem } from '@material-ui/core';
 import moment from 'moment';
-import { add } from '../../util/HttpConnector'
+import { add, getById, edit } from '../../util/HttpConnector'
 import { MuiPickersUtilsProvider } from 'material-ui-pickers';
 import { DatePicker } from 'material-ui-pickers';
 import MomentUtils from '@date-io/moment';
+import CategoryModal from './CategoryModal';
 
 export interface IObject {
-    description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
+    id: number, description: string, value: string, type: string, tax: string, dateValue: string, isPaid: boolean
 }
 
 
 function TableComponent(props) {
 
+    const [id] = useState(0);
     const [expanded, setExpand] = useState(false);
     const [type, setType] = useState('');
     const [value, setValue] = useState('');
@@ -32,11 +34,10 @@ function TableComponent(props) {
     const [isPaid, setIsPaid] = useState(false);
 
     const [object] = useState({
-        description, value, type, tax, dateValue, isPaid
+        id, description, value, type, tax, dateValue, isPaid
     })
 
-    const [objectOriginal] = useState({ ...object });
-
+    const [editObject, setEditObject] = useState<IObject[]>([]);
 
     const [open, setOpen] = useState(false);
     const [rows, setRows] = useState<IObject[]>([]);
@@ -44,7 +45,6 @@ function TableComponent(props) {
     const [rowsPerPage, setRowsPerPage] = useState(10);
 
     const [today, setToday] = useState('');
-    const [count, setCount] = useState(0);
 
     useEffect(() => {
         setToday(moment().format('MMMM Do YYYY'));
@@ -66,7 +66,7 @@ function TableComponent(props) {
             setTaxes(newTaxes);
 
         }
-    }, [rows.length]
+    }, [rows.length, object]
     );
     //usually used as didMount && didUpdate
     useEffect(() => {
@@ -122,9 +122,8 @@ function TableComponent(props) {
                                         <Tooltip title="Paid" placement="top-start"><Icon style={{ color: "green" }}>done_all</Icon></Tooltip>
                                         : <Tooltip title="Click to Pay" placement="top-start"><Icon
 
-                                            onClick={(event) => {
-                                               row.isPaid = !row.isPaid;
-                                               console.log(row.isPaid)
+                                            onClick={async (event) => {
+                                                <CategoryModal open={true} />
                                             }} style={{ color: "red" }}>clear</Icon></Tooltip>}
                                 </TableCell>
                             </TableRow>
@@ -214,6 +213,7 @@ function TableComponent(props) {
             </Paper>
 
             <Dialog
+                itemProps={object}
                 open={open}
                 aria-labelledby="form-dialog-title"
                 className="dialog-expenses"
@@ -234,7 +234,7 @@ function TableComponent(props) {
                                     id="name"
                                     label="Transaction Description"
                                     type="text"
-                                    value={description}
+                                    value={object.description}
                                     onChange={(event) => {
                                         setDescription(event.target.value);
                                     }}
@@ -294,7 +294,6 @@ function TableComponent(props) {
                                 <Icon>insert_chart</Icon>
                             </Grid>
                             <Grid item>
-                                {/* //TODO: transaction / income */}
                                 <FormControl>
                                     <InputLabel htmlFor="age-helper">Transaction Type</InputLabel>
                                     <Select
@@ -318,7 +317,7 @@ function TableComponent(props) {
                             </Grid>
                             <Grid item>
 
-                                <FormControlLabel
+                                <FormControlLabel style={{ alignItems: "flex-end" }}
                                     control={<Checkbox
                                         checked={isPaid}
                                         onChange={(event) => { event.target.checked === true ? setIsPaid(true) : setIsPaid(false) }}
@@ -351,7 +350,7 @@ function TableComponent(props) {
                         object.value = value;
                         object.dateValue = dateValue;
                         object.isPaid = isPaid;
-                        func = await add(object, rows);
+                        func = await add(object);
                         setRows([func, ...rows]);
                         console.log(JSON.stringify(object));
 

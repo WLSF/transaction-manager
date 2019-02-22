@@ -20,7 +20,7 @@
 }
 
 .input-content {
-    margin: 0 50px;
+    margin: 0 20px;
 }
 
 .dialog-expenses {
@@ -45,6 +45,11 @@
             content: '+ ';
         }
     }
+}
+
+.MuiFormControlLabel-root-399,
+.MuiButtonBase-root-50 {
+    align-items: flex-end !important;
 }
 
 .table-paper {
