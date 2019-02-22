@@ -1,109 +1,56 @@
 {
   "transactions": [
     {
-      "description": "321",
-      "value": "4",
-      "type": "",
-      "tax": "34",
+      "description": "Crossfit",
+      "value": "250",
+      "type": 1,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": true,
       "id": 1
     },
     {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
+      "description": "Dívida Jana",
+      "value": "100",
+      "type": 0,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": true,
       "id": 2
     },
     {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
+      "description": "Dívida Kleber",
+      "value": "400",
+      "type": 0,
+      "tax": "2",
+      "dateValue": "2019-02-20",
+      "isPaid": false,
       "id": 3
     },
     {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
+      "description": "DInheiro",
+      "value": "250",
+      "type": 0,
+      "tax": "0",
+      "dateValue": "2019-02-21",
+      "isPaid": true,
       "id": 4
     },
     {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
+      "description": "amanda",
+      "value": "258",
+      "type": 1,
+      "tax": "2",
+      "dateValue": "2019-02-21",
+      "isPaid": false,
       "id": 5
-    },
+    }
+  ],
+  "categories": [
     {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
-      "id": 6
-    },
-    {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
-      "id": 7
-    },
-    {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "1",
-      "id": 8
-    },
-    {
-      "description": "4322",
-      "value": "444",
-      "type": "",
-      "tax": "321",
-      "id": 9
-    },
-    {
-      "description": "fdsa",
-      "value": "432",
-      "type": "1",
-      "tax": "432",
-      "id": 10
-    },
-    {
-      "description": "fdsagfdgdfg",
-      "value": "2222",
-      "type": "1",
-      "tax": "232323",
-      "id": 11
-    },
-    {
-      "description": "fdsagfdgdfg",
-      "value": "2222",
-      "type": "1",
-      "tax": "232323",
-      "id": 12
-    },
-    {
-      "description": "fdsagfdgdfg",
-      "value": "2222",
-      "type": "1",
-      "tax": "232323",
-      "id": 13
-    },
-    {
-      "description": "fdsagfdgdfg",
-      "value": "2222",
-      "type": "1",
-      "tax": "232323",
-      "id": 14
-    },
-    {
-      "description": "fdsagfdgdfg",
-      "value": "2222",
-      "type": "1",
-      "tax": "232323",
-      "id": 15
+      "description": "House Expenses",
+      "id": 1,
+      "type": 1
     }
   ]
 }

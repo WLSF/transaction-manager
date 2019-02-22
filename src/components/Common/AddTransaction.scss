@@ -1,0 +1,17 @@
+// .MuiSpeedDial-actions-126.MuiSpeedDial-directionDown-123 {
+//     margin-top: 17px;
+//     position: absolute;
+//     padding-top: 48px
+// }
+.speed-actions {
+    &-i {
+        &:hover {
+            color: #f44336;
+        }
+    }
+    &-e {
+        &:hover {
+            color: #4caf50;
+        }
+    }
+}

@@ -7,6 +7,8 @@ import IconButton from '@material-ui/core/IconButton';
 import './HeaderComponent.scss';
 import TableComponent from './TableComponent';
 import Icon from '@material-ui/core/Icon';
+import { Badge, MenuItem } from '@material-ui/core';
+import AddTransaction from './AddTransaction';
 
 const styles = {
     root: {
@@ -34,11 +36,20 @@ function HeaderComponent(props) {
                     <Typography variant="h6" color="inherit" className={classes.grow}>
                         TRANSACTION MANAGER
                     </Typography>
-
+                    <MenuItem>
+                        <IconButton color="inherit">
+                            <Badge badgeContent={4} color="secondary">
+                                <Icon>notifications</Icon>
+                            </Badge>
+                        </IconButton>
+                    </MenuItem>
                 </Toolbar>
             </AppBar>
 
             <TableComponent />
+
+           
+
         </div>
     );
 }

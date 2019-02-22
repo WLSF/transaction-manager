@@ -1,0 +1,16 @@
+
+//TODO: 
+
+- criar tags para categorias
+- editar e excluir categorias 
+- limpar cache
+- efetivar transação
+- mover de categoria 
+- filtrar transação por categoria
+- filtrar transação 
+- listar categorias
+- criar rotasw
+
+
+// nao pode editar pq já foi criado transações  
+somente efetivar
